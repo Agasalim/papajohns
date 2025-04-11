@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+
+<body>
+
+    <section id="topPanel" class="height_fit">
+        <nav>
+            <div class="toplinks">
+                <div class="left_site">
+                    <img src="img/PJ-logo.png" alt="">
+                </div>
+                <div class="right_site">
+                    <button class="post_form_btn">+ Elan</button>
+                    <div class="lang">
+                        <i class="fa-solid fa-globe"></i>
+                        <select id="language">
+                            <option value="AZ">AZ</option>
+                            <option value="EN">EN</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="menu_bar">
+                    <div class="menu_lines line1"></div>
+                    <div class="menu_lines line2"></div>
+                    <div class="menu_lines line3"></div>
+                </div>
+            </div>
+            <div class="menu_links">
+                <div class="navlinks"></div>
+                <button class="order_btn">Sifaris et</button>
+            </div>
+        </nav>
+    </section>
+
+    <header>
+        <div class="form_box">
+            <form>
+                <i class="fa-solid fa-xmark"></i>
+                <h3 class="form_head">Menu elave et</h3>
+                <input class="form_img form_input" type="text" placeholder="img linki yukleyin">
+                <input class="form_name form_input" type="text" placeholder="Menu adi">
+                <input class="form_desc form_input" type="text" placeholder="Menu tesviri">
+                <input class="form_price form_input" type="number" placeholder="Menu qiymeti">
+                <input class="form_id form_input" type="text" placeholder="ID">
+                <select id="cat_select"></select>
+                <button class="submit" type="button" onclick="addMenu(event)">Gonder</button>
+            </form>
+        </div>
+        <div id="slider">
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"><img src="img/slider-1.png" alt=""></div>
+                    <div class="swiper-slide"><img src="img/slider-2.png" alt=""></div>
+                    <div class="swiper-slide"><img src="img/slider-3.png" alt=""></div>
+                    <div class="swiper-slide"><img src="img/slider-4.png" alt=""></div>
+                    <div class="swiper-slide"><img src="img/slider-5.png" alt=""></div>
+                    <div class="swiper-slide"><img src="img/slider-6.png" alt=""></div>
+                    <div class="swiper-slide"><img src="img/slider-7.png" alt=""></div>
+                    <div class="swiper-slide"><img src="img/slider-8.png" alt=""></div>
+                    <div class="swiper-slide"><img src="img/slider-9.png" alt=""></div>
+                    <div class="swiper-slide"><img src="img/slider-10.png" alt=""></div>
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="menular"></div>
+        </div>
+    </main>
+
+    <footer></footer>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="nav.js"></script>
+    <script src="app.js" type="module"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            slidesPerView: "auto",
+            centeredSlides: true,
+            spaceBetween: 30,
+            autoplay: {
+                delay: 2500,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+        });
+    </script>
+</body>
+
+</html>
