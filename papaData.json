@@ -1942,11 +1942,20 @@
       "id": "Rl_H4YpvxFumTx-sND0V5"
     },
     {
-      "category": "desertlar",
       "img": "https://order.papajohns.az/images/menu/PJ%20Azerbaijan/336x224_cea02388c7e67f4ca204e3ee470e819f.jpg",
       "title": "Dondurma",
+      "composition": "sirin",
       "price": "2",
+      "category": "desertlar",
       "id": "mK-6aVd-B5Ndw3DrHCvQF"
+    },
+    {
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQs4VcqM53Ex8FeiiN1LHvQv58Ck1YWM580uQ&s",
+      "title": "Marojna",
+      "composition": "curbecur",
+      "price": "5",
+      "category": "desertlar",
+      "id": "pbme5Ow"
     }
   ],
   "category": [

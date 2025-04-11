@@ -274,9 +274,10 @@ form {
     border-color: #007bff;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
 }
-.submit {
+.submit, .edit_btn {
     width: 100%;
     padding: 12px;
+    margin-bottom: 5px;
     background-color: #007bff;
     color: white;
     border: none;

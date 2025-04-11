@@ -64,4 +64,22 @@ let postMenu = async function(category, newMenu){
     }
 }
 
-export {getLinks, categoryData, deleteMenu, postMenu};
+let editMenu = async function(category, editedMenu, id){
+    try{
+        let url = `${BASE_URL.PUT}/${category}/${id}`
+        let res = await fetch(url, {
+            method: "PUT",
+            headers: {"Content-type": "application/json"},
+            body: JSON.stringify(editedMenu)
+        })
+        if(!res.ok){
+            throw new Error (`Editde problem var: ${res.status}`)
+        }
+        console.warn("Menu deyisdirildi")
+    }
+    catch (error) {
+        console.error(`Edit olunmadi: ${error}`)
+    }
+}
+
+export {getLinks, categoryData, deleteMenu, postMenu, editMenu};

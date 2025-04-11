@@ -23,7 +23,9 @@ $(".menu_bar").click(function () {
     menuToggle()
 })
 $(".post_form_btn").click(function () {
-    $(".form_box").slideDown()
+    $(".form_box").slideDown();
+    $(".form_input").val("");
+    $("#cat_select").val("");
     if (panel.hasClass("height_100")) {
         menuToggle();
     }

@@ -1,4 +1,4 @@
-import { categoryData, deleteMenu, getLinks, postMenu } from "./service.js";
+import { categoryData, deleteMenu, editMenu, getLinks, postMenu } from "./service.js";
 
 let menular = document.querySelector(".menular")
 let navlinks = document.querySelector(".navlinks")
@@ -7,6 +7,7 @@ let catSelect = document.querySelector("#cat_select");
 let linkler = []; // Navbar-daki linkler
 let catValue = []; // Form-da select-in valulari
 let catData = []; // category massivi
+let globeID;
 
 navLinksShow();
 selectCatVal();
@@ -42,7 +43,6 @@ window.menuShow = async function (event, category) {
     if (category === "kampaniyalar") {
         document.querySelector("#slider").style.display = "initial"
         menular.innerHTML = ""
-        localStorage.setItem("SelectedCategory", category);
     }
     else {
         document.querySelector("#slider").style.display = "none"
@@ -64,8 +64,8 @@ window.menuShow = async function (event, category) {
                 </div>`
         })
     }
+    sessionStorage.setItem("SelectedCategory", category);
     await linkStyle(category)
-    localStorage.setItem("SelectedCategory", category);
     $(".form_box").slideUp()
     if ($("#topPanel").hasClass("height_100")) {
         menuToggle();
@@ -75,11 +75,10 @@ window.menuShow = async function (event, category) {
 window.sil = async function (category, id) {
     await deleteMenu(category, id);
     await menuShow(null, category);
-    localStorage.setItem("SelectedCategory", category)
+    await linkStyle(category);
+    sessionStorage.setItem("SelectedCategory", category)
 }
-
-window.addMenu = async function (e) { //! addEventListener ile yoxlamaq qaldi
-    e.preventDefault();
+function getValues(){
     let newMenu = {
         img: formInputs[0].value,
         title: formInputs[1].value,
@@ -87,17 +86,46 @@ window.addMenu = async function (e) { //! addEventListener ile yoxlamaq qaldi
         price: formInputs[3].value,
         category: catSelect.value
     }
+    return newMenu;
+}
+
+window.addMenu = async function (e) { //! addEventListener ile yoxlamaq qaldi
+    e.preventDefault();
+    let newMenu = getValues();
     let category = catSelect.value;
     await postMenu(category, newMenu);
     await menuShow(null, category);
+    await linkStyle(category);
     $('html, body').animate({ scrollTop: $(document).height() }, 'slow');
-    localStorage.setItem("SelectedCategory", category);
+    sessionStorage.setItem("SelectedCategory", category);
+}
+
+window.edit = async function(category, id){
+    $(".form_box").slideDown()
+    $("html, body").animate({scrollTop: "0"})
+    catData = await categoryData(category)
+    let element = catData.find(item => item.id == id);
+    formInputs[0].value = element.img
+    formInputs[1].value = element.title
+    formInputs[2].value = element.composition
+    formInputs[3].value = element.price
+    catSelect.value = category
+    globeID = id;
+}
+
+window.menuYenile = function(e){
+    e.preventDefault();
+    let editedMenu = getValues()
+    let category = catSelect.value
+    editMenu(category, editedMenu, globeID)
+    $(".form_box").slideUp()
+    $("html, body").animate({scrollTop: $(document).height()})
 }
 
 window.onload = async function () {
     navLinksShow();
     selectCatVal();
-    let SelectedCategory = localStorage.getItem("SelectedCategory") || "kampaniyalar";
+    let SelectedCategory = sessionStorage.getItem("SelectedCategory") || "kampaniyalar";
     if (SelectedCategory === "kampaniyalar") {
         document.querySelector("#slider").style.display = "initial"
         menular.innerHTML = ""
@@ -105,6 +133,7 @@ window.onload = async function () {
     else {
         document.querySelector("#slider").style.display = "none"
         await menuShow(null, SelectedCategory);
+        await linkStyle(SelectedCategory);
     }
 };
 
