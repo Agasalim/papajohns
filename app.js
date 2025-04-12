@@ -95,18 +95,21 @@ window.addMenu = async function (e) { //! addEventListener ile yoxlamaq qaldi
     await menuShow(null, category);
     await linkStyle(category);
     $('html, body').animate({ scrollTop: $(document).height() }, 'slow');
+    $(".edit_btn").show();
     sessionStorage.setItem("SelectedCategory", category);
 }
 window.edit = async function(category, id){
-    $(".form_box").slideDown()
-    $("html, body").animate({scrollTop: "0"})
-    catData = await categoryData(category)
+    $(".form_box").slideDown();
+    $(".form_img").focus();
+    $(".submit").hide();
+    $("html, body").animate({scrollTop: "0"});
+    catData = await categoryData(category);
     let element = catData.find(item => item.id == id);
-    formInputs[0].value = element.img
-    formInputs[1].value = element.title
-    formInputs[2].value = element.composition
-    formInputs[3].value = element.price
-    catSelect.value = category
+    formInputs[0].value = element.img;
+    formInputs[1].value = element.title;
+    formInputs[2].value = element.composition;
+    formInputs[3].value = element.price;
+    catSelect.value = category;
     globeID = id;
 }
 window.menuYenile = function(e){
@@ -114,6 +117,7 @@ window.menuYenile = function(e){
     let editedMenu = getValues()
     let category = catSelect.value
     editMenu(category, editedMenu, globeID)
+    $(".submit").show();
     $(".form_box").slideUp()
     $("html, body").animate({scrollTop: $(document).height()})
 }

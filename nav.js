@@ -26,10 +26,14 @@ $(".post_form_btn").click(function () {
     $(".form_box").slideDown();
     $(".form_input").val("");
     $("#cat_select").val("");
+    $(".form_img").focus();
+    $(".edit_btn").hide();
     if (panel.hasClass("height_100")) {
         menuToggle();
     }
 })
 $(".fa-xmark").click(function () {
-    $(".form_box").slideUp()
+    $(".form_box").slideUp();
+    $(".edit_btn").show();
+    $(".submit").show();
 })
