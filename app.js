@@ -26,18 +26,16 @@ async function selectCatVal() {
         catSelect.innerHTML += `<option value="${item.category}">${item.category}</option>`
     })
 }
-
 window.linkStyle = function(category){
     let link = [...document.querySelectorAll(".navlinks a")]
     link.forEach(item => {
-        item.style.backgroundColor = "transparent"
+        item.style.color = "black"
     })
     if ($("#topPanel").hasClass("height_fit")) {
         let thisCategory = link.find(item => item.textContent == category)
-        thisCategory.style.backgroundColor = "lightgreen";
+        thisCategory.style.color = "red";
     }
 }
-
 window.menuShow = async function (event, category) {
     if (event) event.preventDefault();
     if (category === "kampaniyalar") {
@@ -57,9 +55,11 @@ window.menuShow = async function (event, category) {
                         <h4 class="menu_category">${menu.category}</h4>
                         <p class="menu_description">${menu.composition}</p>
                         <p class="menu_price">${menu.price} azn</p>
-                        <p class="menu_id">${menu.id}</p>
-                        <button class="del" onclick="sil('${category}','${menu.id}')">Sil</button>
-                        <button class="edit" onclick="edit('${category}','${menu.id}')">Edit</button>
+                        <p class="menu_id">ID: ${menu.id}</p>
+                        <div class="menu_btns">
+                            <button class="del" onclick="sil('${category}','${menu.id}')">Sil</button>
+                            <button class="edit" onclick="edit('${category}','${menu.id}')">Edit</button>
+                        </div>
                     </div>
                 </div>`
         })
@@ -71,7 +71,6 @@ window.menuShow = async function (event, category) {
         menuToggle();
     }
 }
-
 window.sil = async function (category, id) {
     await deleteMenu(category, id);
     await menuShow(null, category);
@@ -88,7 +87,6 @@ function getValues(){
     }
     return newMenu;
 }
-
 window.addMenu = async function (e) { //! addEventListener ile yoxlamaq qaldi
     e.preventDefault();
     let newMenu = getValues();
@@ -99,7 +97,6 @@ window.addMenu = async function (e) { //! addEventListener ile yoxlamaq qaldi
     $('html, body').animate({ scrollTop: $(document).height() }, 'slow');
     sessionStorage.setItem("SelectedCategory", category);
 }
-
 window.edit = async function(category, id){
     $(".form_box").slideDown()
     $("html, body").animate({scrollTop: "0"})
@@ -112,7 +109,6 @@ window.edit = async function(category, id){
     catSelect.value = category
     globeID = id;
 }
-
 window.menuYenile = function(e){
     e.preventDefault();
     let editedMenu = getValues()
@@ -121,7 +117,6 @@ window.menuYenile = function(e){
     $(".form_box").slideUp()
     $("html, body").animate({scrollTop: $(document).height()})
 }
-
 window.onload = async function () {
     navLinksShow();
     selectCatVal();
@@ -136,4 +131,7 @@ window.onload = async function () {
         await linkStyle(SelectedCategory);
     }
 };
-
+window.mainPage = async function(){
+    let category = "kampaniyalar";
+    await menuShow(null, category);
+}

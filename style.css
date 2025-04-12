@@ -49,6 +49,7 @@ nav{
     right: 0; 
     top: 0;
 }
+.left_site img{cursor: pointer;}
 .right_site{
     position: absolute;
     left: 0;
@@ -110,7 +111,7 @@ nav{
 .order_btn:hover{background-color: var(--bg_white);}
 
 /**<---MENULAR--->*/
-main{padding-top: 120px;}
+main{padding-top: 30px;}
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -131,7 +132,7 @@ main{padding-top: 120px;}
 }
 .menu:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 10px 7px rgba(0, 0, 0, 0.15);
 }
 .menu img {
     width: 100%;
@@ -139,26 +140,40 @@ main{padding-top: 120px;}
     object-fit: cover;
     border-bottom: 3px solid #ff6b6b;
 }
-.menu_info {padding: 20px;}
+.menu_info {padding: 20px; position: relative;}
 .menu_name {
-    font-size: 22px;
+    font: 600 1.5rem "Roboto", sans-serif;
     color: #c02424;
-    margin-bottom: 10px;
-    font-weight: 600;
+    margin-bottom: 5px;
+}
+.menu_category{
+    font: 500 1.2rem "Roboto", sans-serif;
+    color: #333;
+    margin-bottom: 7px;
 }
 .menu_description {
+    font: 400 0.9rem "Roboto", sans-serif;
     color: #666;
-    margin-bottom: 15px;
-    font-size: 14px;
+    margin-bottom: 7px;
     line-height: 1.5;
 }
 .menu_price {
-    font-size: 18px;
-    font-weight: bold;
+    font: 500 1.2rem "Roboto", sans-serif;
     color: #28a745;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
-.menu_cat {
+.menu_id{
+    font: 500 1rem "Roboto", sans-serif;
+    color: #333;
+    margin-bottom: 5px;
+}
+.menu_btns{
+    display: flex;
+    justify-content: end;
+    gap: 10px;
+    margin-top: 10px;
+}
+/* .menu_cat {
     display: inline-block;
     background-color: #f7eed6;
     color: #c02424;
@@ -167,16 +182,17 @@ main{padding-top: 120px;}
     font-size: 12px;
     font-weight: 600;
     text-transform: uppercase;
-}
+} */
 .del, .edit{
+    font: 500 1rem "Roboto", sans-serif;
     padding: 5px 20px;
     letter-spacing: 1px;
     text-transform: capitalize;
     border: none;
-    border-radius: 7px;
-    background-color: var(--bg_red);
+    border-radius: 5px;
     color: var(--bg_white);
 }
+.del{background-color: var(--bg_red);}
 .edit{background-color: #28a745;}
 
 /** SLIDER */
@@ -298,6 +314,7 @@ form {
         transition: .3s;
     }
     .navlinks a:hover{background-color: var(--bg3);}
+    main{padding-top: 100px;}
     .menu_links{
         width: 100%;
         display: flex;
