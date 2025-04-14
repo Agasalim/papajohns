@@ -205,9 +205,10 @@ header {
 }
 .swiper {
     width: 100%;
-    height: 70vh;
+    height: 80vh;
 }
 .swiper-slide {
+    width: 100%;
     text-align: center;
     font-size: 18px;
     background: #fff;
@@ -218,16 +219,15 @@ header {
 .swiper-slide img {
     display: block;
     width: 100%;
-    height: 100%;
     object-fit: cover;
 }
-.swiper-slide {width: 100%;}
-.swiper-slide:nth-child(2n) {width: 80%;}
-.swiper-slide:nth-child(3n) {width: 60%;}
 #slider{position: relative;}
 .swiper-pagination{
-    position: absolute;
-    top: -100px;
+    margin-top: 15px;
+    position: relative !important;
+    bottom: auto !important;
+    left: auto !important;
+    width: 100% !important;
 }
 
 /**<---POST--->*/

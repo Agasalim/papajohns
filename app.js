@@ -131,6 +131,7 @@ window.addMenu = async function (e) {
     sessionStorage.setItem("SelectedCategory", category);
 }
 window.edit = async function (category, id) {
+    $(".form_head").text("Menuda deyisiklik et")
     $(".form_box").slideDown();
     $(".form_img").focus();
     $(".submit").hide();

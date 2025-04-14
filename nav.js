@@ -23,6 +23,7 @@ $(".menu_bar").click(function () {
     menuToggle()
 })
 $(".post_form_btn").click(function () {
+    $(".form_head").text("Menu elave et")
     $(".form_box").slideDown();
     $(".form_input").val("");
     $("#cat_select").val("");
