@@ -89,12 +89,16 @@ nav{
     flex-direction: column;
 }
 .navlinks a{
-    width: 150px;
+    width: fit-content;
     font: 600 1.2rem "Roboto", sans-serif;
     color: var(--bg_black);
+    border-bottom: 2px solid transparent;
     text-transform: capitalize;
     padding: 5px 0;
+    transition: .3s;
 }
+.navlinks a:hover{border-color: var(--bg_red);}
+.navlinks a:focus{border-color: var(--bg_red);}
 .menu_links{display: none;}
 .order_btn{
     width: 150px;
@@ -345,7 +349,7 @@ form {
     .navlinks a{
         width: fit-content;
         padding: 3px 10px;
-        border-radius: 15px;
+        /* border-radius: 15px; */
         transition: .3s;
     }
     .navlinks a:hover{background-color: var(--bg3);}
