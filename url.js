@@ -1,8 +1,8 @@
 let BASE_URL = {
-    GET: "http://localhost:3000",
-    POST: "http://localhost:3000",
-    PUT: "http://localhost:3000",
-    DELETE: "http://localhost:3000"
+    GET: "https://papadata-render.onrender.com/",
+    POST: "https://papadata-render.onrender.com/",
+    PUT: "https://papadata-render.onrender.com/",
+    DELETE: "https://papadata-render.onrender.com/"
 }
 
 export default BASE_URL

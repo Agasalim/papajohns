@@ -7,7 +7,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="style2.css">
+    <link rel="stylesheet" href="loader.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,6 +16,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+    <link rel="stylesheet" href="bower_components/sweetalert2/dist/sweetalert2.min.css">
 </head>
 
 <body>
@@ -55,10 +57,10 @@
                 <i class="fa-solid fa-xmark"></i>
                 <h3 class="form_head">Menu elave et</h3>
                 <input class="form_img form_input" type="text" placeholder="img linki yukleyin">
-                <input class="form_name form_input" type="text" placeholder="Menu adi">
+                <input class="form_name form_input" type="text" placeholder="Menu adi" required>
                 <input class="form_desc form_input" type="text" placeholder="Menu tesviri">
-                <input class="form_price form_input" type="number" placeholder="Menu qiymeti">
-                <select id="cat_select"></select>
+                <input class="form_price form_input" type="number" placeholder="Menu qiymeti" required>
+                <select id="cat_select" required></select>
                 <button class="submit" type="button" onclick="addMenu(event)">Gonder</button>
                 <button class="edit_btn" type="button" onclick="menuYenile(event)">Yenile</button>
             </form>
@@ -84,12 +86,16 @@
 
     <main>
         <div class="container">
+            <div class="my_loader"><span class='loader'></span></div>
             <div class="menular"></div>
         </div>
     </main>
 
     <footer></footer>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js"
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="nav.js"></script>

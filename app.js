@@ -8,7 +8,13 @@ let linkler = []; // Navbar-daki linkler
 let catValue = []; // Form-da select-in valulari
 let catData = []; // category massivi
 let globeID;
-
+var notyf = new Notyf({
+    duration: 4000,
+    position: {
+        x: 'center',
+        y: 'top',
+    }
+});
 navLinksShow();
 selectCatVal();
 async function navLinksShow() {
@@ -26,7 +32,7 @@ async function selectCatVal() {
         catSelect.innerHTML += `<option value="${item.category}">${item.category}</option>`
     })
 }
-window.linkStyle = function(category){
+window.linkStyle = function (category) {
     let link = [...document.querySelectorAll(".navlinks a")]
     link.forEach(item => {
         item.style.color = "black"
@@ -44,12 +50,14 @@ window.menuShow = async function (event, category) {
     }
     else {
         document.querySelector("#slider").style.display = "none"
-        menular.innerHTML = ""
+        $(".my_loader").show();
         catData = await categoryData(category)
+        $(".my_loader").hide();
+        menular.innerHTML = ""
         catData.forEach(menu => {
             menular.innerHTML +=
                 `<div class="menu">
-                    <img src="${menu.img}"/>
+                    <img src="${menu.img}" onerror="this.src='img/noimages.jpeg'"/>
                     <div class="menu_info">
                         <h3 class="menu_name">${menu.title}</h3>
                         <h4 class="menu_category">${menu.category}</h4>
@@ -71,13 +79,33 @@ window.menuShow = async function (event, category) {
         menuToggle();
     }
 }
-window.sil = async function (category, id) {
-    await deleteMenu(category, id);
-    await menuShow(null, category);
-    await linkStyle(category);
-    sessionStorage.setItem("SelectedCategory", category)
+window.sil = function (category, id) {
+    Swal.fire({
+        title: 'Silmək istədiyinizə əminsiz?',
+        text: "Geri qaytarmaq mümkün olmayacaq!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Bəli, silinsin!',
+        cancelButtonText: 'Xeyr, ləğv et'
+    }).then(async (result) => {
+        if (result.isConfirmed) {
+            await deleteMenu(category, id);
+            await menuShow(null, category);
+            await linkStyle(category);
+            sessionStorage.setItem("SelectedCategory", category);
+            
+            Swal.fire({
+                title: 'Ugurlu!',
+                text: 'Sizin menyu uğurla silindi!',
+                icon: 'success',
+                confirmButtonText: 'Bağla'
+            });
+        }
+    });
 }
-function getValues(){
+function getValues() {
     let newMenu = {
         img: formInputs[0].value,
         title: formInputs[1].value,
@@ -87,22 +115,23 @@ function getValues(){
     }
     return newMenu;
 }
-window.addMenu = async function (e) { //! addEventListener ile yoxlamaq qaldi
+window.addMenu = async function (e) {
     e.preventDefault();
     let newMenu = getValues();
     let category = catSelect.value;
     await postMenu(category, newMenu);
-    await menuShow(null, category);
     await linkStyle(category);
+    await menuShow(null, category);
     $('html, body').animate({ scrollTop: $(document).height() }, 'slow');
     $(".edit_btn").show();
+    notyf.success('Sizin menu ugurla eleve edildi!');
     sessionStorage.setItem("SelectedCategory", category);
 }
-window.edit = async function(category, id){
+window.edit = async function (category, id) {
     $(".form_box").slideDown();
     $(".form_img").focus();
     $(".submit").hide();
-    $("html, body").animate({scrollTop: "0"});
+    $("html, body").animate({ scrollTop: "0" });
     catData = await categoryData(category);
     let element = catData.find(item => item.id == id);
     formInputs[0].value = element.img;
@@ -112,14 +141,16 @@ window.edit = async function(category, id){
     catSelect.value = category;
     globeID = id;
 }
-window.menuYenile = function(e){
+window.menuYenile = async function (e) {
     e.preventDefault();
     let editedMenu = getValues()
     let category = catSelect.value
-    editMenu(category, editedMenu, globeID)
+    await editMenu(category, editedMenu, globeID)
+    await menuShow(null, category);
+    notyf.success('Sizin menunuz ugurla yenilendi!');
     $(".submit").show();
     $(".form_box").slideUp()
-    $("html, body").animate({scrollTop: $(document).height()})
+    $("html, body").animate({ scrollTop: $(document).height() })
 }
 window.onload = async function () {
     navLinksShow();
@@ -135,7 +166,9 @@ window.onload = async function () {
         await linkStyle(SelectedCategory);
     }
 };
-window.mainPage = async function(){
+window.mainPage = async function () {
     let category = "kampaniyalar";
     await menuShow(null, category);
 }
+
+//! success

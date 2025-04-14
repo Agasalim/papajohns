@@ -111,6 +111,13 @@ nav{
 .order_btn:hover{background-color: var(--bg_white);}
 
 /**<---MENULAR--->*/
+.my_loader{
+    width: 100%;
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+    height: 50px;
+}
 main{padding-top: 30px;}
 .container {
     max-width: 1200px;
@@ -173,16 +180,6 @@ main{padding-top: 30px;}
     gap: 10px;
     margin-top: 10px;
 }
-/* .menu_cat {
-    display: inline-block;
-    background-color: #f7eed6;
-    color: #c02424;
-    padding: 5px 30px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-} */
 .del, .edit{
     font: 500 1rem "Roboto", sans-serif;
     padding: 5px 20px;
@@ -233,21 +230,28 @@ header {
 }
 
 /**<---POST--->*/
-.form_box{
+.form_box {
     padding-top: 70px;
     display: none;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    overflow-y: auto;
 }
 form {
     position: relative;
     max-width: 500px;
-    margin: auto;
+    margin: 20px auto;
     padding: 20px;
     background-color: #f9f9f9;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    font-family: Arial, sans-serif;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
-.fa-xmark{
+.fa-xmark {
     position: absolute;
     right: 20px;
     top: 15px;
@@ -255,6 +259,11 @@ form {
     font-size: 1.5rem;
     color: #333;
     cursor: pointer;
+    transition: all 0.3s ease;
+}
+.fa-xmark:hover {
+    color: #ff0000;
+    transform: scale(1.2);
 }
 .form_head {
     text-align: center;
@@ -267,8 +276,7 @@ form {
 .form_img,
 .form_name,
 .form_desc,
-.form_price,
-.form_id {
+.form_price {
     width: 100%;
     padding: 12px;
     margin: 10px 0;
@@ -278,31 +286,62 @@ form {
     box-sizing: border-box;
     transition: border-color 0.3s ease;
 }
-.form-img::placeholder,
-.form-name::placeholder,
-.form-desc::placeholder,
-.form-price::placeholder {color: #aaa;}
-.form-img:focus,
-.form-name:focus,
-.form-desc:focus,
-.form-price:focus {
+.form_img::placeholder,
+.form_name::placeholder,
+.form_desc::placeholder,
+.form_price::placeholder {color: #aaa;}
+.form_img:focus,
+.form_name:focus,
+.form_desc:focus,
+.form_price:focus {
     outline: none;
     border-color: #007bff;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
 }
-.submit, .edit_btn {
+#cat_select {
     width: 100%;
     padding: 12px;
-    margin-bottom: 5px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+    background-color: white;
+    color: #333;
+    cursor: pointer;
+}
+#cat_select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+.submit {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0 5px;
     background-color: #007bff;
     color: white;
     border: none;
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
 }
 .submit:hover {background-color: #0056b3;}
+.edit_btn {
+    width: 100%;
+    padding: 12px;
+    margin: 5px 0;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.edit_btn:hover {background-color: #218838;}
 
 @media (min-width: 1024px) {
     .menu_bar{display: none;}
@@ -333,7 +372,7 @@ form {
         padding: 0;
     }
     .order_btn{margin: 0}
-    .form_box{padding-top: 130px;}
+    .form_box {padding-top: 130px;}
     .post_form_btn{margin: 0 15px 0 0;}
     #slider{top: 130px;}
 }
@@ -349,11 +388,13 @@ form {
         max-width: 90%;
         padding: 15px;
     }
-    .form-img,
-    .form-name,
-    .form-desc,
-    .form-price,
-    .submit {
+    .form_img,
+    .form_name,
+    .form_desc,
+    .form_price,
+    #cat_select,
+    .submit,
+    .edit_btn {
         font-size: 14px;
         padding: 10px;
     }
