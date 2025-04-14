@@ -15,6 +15,8 @@ var notyf = new Notyf({
         y: 'top',
     }
 });
+document.querySelector(".my_loader").style.display = "none";
+
 navLinksShow();
 selectCatVal();
 async function navLinksShow() {
@@ -47,6 +49,7 @@ window.menuShow = async function (event, category) {
     if (category === "kampaniyalar") {
         document.querySelector("#slider").style.display = "initial"
         menular.innerHTML = ""
+        document.querySelector(".my_loader").style.display = "none";
     }
     else {
         document.querySelector("#slider").style.display = "none"
@@ -153,6 +156,7 @@ window.menuYenile = async function (e) {
     $("html, body").animate({ scrollTop: $(document).height() })
 }
 window.onload = async function () {
+    document.querySelector(".my_loader").style.display = "none";
     navLinksShow();
     selectCatVal();
     let SelectedCategory = sessionStorage.getItem("SelectedCategory") || "kampaniyalar";
@@ -170,5 +174,3 @@ window.mainPage = async function () {
     let category = "kampaniyalar";
     await menuShow(null, category);
 }
-
-//! success
