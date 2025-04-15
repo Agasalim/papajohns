@@ -34,13 +34,14 @@ async function selectCatVal() {
         catSelect.innerHTML += `<option value="${item.category}">${item.category}</option>`
     })
 }
-window.linkStyle = function (category) {
+window.linkStyle = async function (category) {
+    await getLinks();
     let link = [...document.querySelectorAll(".navlinks a")]
     link.forEach(item => {
         item.style.color = "black"
     })
     if ($("#topPanel").hasClass("height_fit")) {
-        let thisCategory = link.find(item => item.textContent == category)
+        let thisCategory = link.find(item => item.textContent.toLowerCase() === category.toLowerCase())
         thisCategory.style.color = "red";
     }
 }
@@ -75,8 +76,9 @@ window.menuShow = async function (event, category) {
                 </div>`
         })
     }
+    $("html, body").animate({scrollTop: 0})
     sessionStorage.setItem("SelectedCategory", category);
-    await linkStyle(category)
+    await linkStyle(category);
     $(".form_box").slideUp()
     if ($("#topPanel").hasClass("height_100")) {
         menuToggle();
