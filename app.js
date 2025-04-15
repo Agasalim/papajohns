@@ -177,3 +177,9 @@ window.mainPage = async function () {
     let category = "kampaniyalar";
     await menuShow(null, category);
 }
+
+// Her category ucun data yaradilmalidir
+// Her emeliyyatda data-ya da elave ve silinmeli ve ya deyisiklik olunmalidir
+// Her emeliyyatin icinde fetch emeliyyatini cagirmamaliyiq, sadece data-lardan istifade edilecek 
+// sessionStorage- legv olunacaq
+// onload legv olunacaq
