@@ -53,11 +53,15 @@ window.menuShow = async function (event, category) {
         document.querySelector(".my_loader").style.display = "none";
     }
     else {
-        document.querySelector("#slider").style.display = "none"
         $(".my_loader").show();
+        $(".form_box").slideUp()
+        if ($("#topPanel").hasClass("height_100")) {
+            menuToggle();
+        }
+        document.querySelector("#slider").style.display = "none"
         catData = await categoryData(category)
-        $(".my_loader").hide();
         menular.innerHTML = ""
+        $(".my_loader").hide();
         catData.forEach(menu => {
             menular.innerHTML +=
                 `<div class="menu">
@@ -76,13 +80,9 @@ window.menuShow = async function (event, category) {
                 </div>`
         })
     }
-    $("html, body").animate({scrollTop: 0})
-    sessionStorage.setItem("SelectedCategory", category);
+    $("html, body").animate({ scrollTop: 0 })
     await linkStyle(category);
-    $(".form_box").slideUp()
-    if ($("#topPanel").hasClass("height_100")) {
-        menuToggle();
-    }
+    sessionStorage.setItem("SelectedCategory", category);
 }
 window.sil = function (category, id) {
     Swal.fire({
@@ -100,7 +100,7 @@ window.sil = function (category, id) {
             await menuShow(null, category);
             await linkStyle(category);
             sessionStorage.setItem("SelectedCategory", category);
-            
+
             Swal.fire({
                 title: 'Ugurlu!',
                 text: 'Sizin menyu uğurla silindi!',
