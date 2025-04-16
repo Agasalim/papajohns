@@ -4,9 +4,9 @@ let menular = document.querySelector(".menular")
 let navlinks = document.querySelector(".navlinks")
 let formInputs = document.querySelectorAll(".form_input")
 let catSelect = document.querySelector("#cat_select");
-let linkler = []; // Navbar-daki linkler
-let catValue = []; // Form-da select-in valulari
-let catData = []; // category massivi
+let link = [];
+let categoryDataObj = {};
+let allCategory = []; // Navbar-daki linkler
 let globeID;
 var notyf = new Notyf({
     duration: 4000,
@@ -16,27 +16,34 @@ var notyf = new Notyf({
     }
 });
 document.querySelector(".my_loader").style.display = "none";
-
-navLinksShow();
-selectCatVal();
-async function navLinksShow() {
-    linkler = await getLinks()
+allData();
+async function allData() {
+    allCategory = await getLinks();
+    for (let cat of allCategory) {
+        if (cat.category !== "kampaniyalar") {
+            categoryDataObj[cat.category] = await categoryData(cat.category);
+        }
+    }
+    navLinksShow();
+    selectCatVal();
+}
+function navLinksShow() {
     navlinks.innerHTML = ""
-    linkler.forEach(link => {
+    allCategory.forEach(link => {
         navlinks.innerHTML += `<a href="" onclick="menuShow(event, '${link.category}')">${link.category}</a>`
     })
+    link = [...document.querySelectorAll(".navlinks a")]
 }
-async function selectCatVal() {
-    catValue = await getLinks();
+function selectCatVal() {
     catSelect.innerHTML = ""
     catSelect.innerHTML = `<option value="" hidden selected>Categorya secin</option>`
-    catValue.forEach(item => {
+    allCategory.forEach(item => {
         catSelect.innerHTML += `<option value="${item.category}">${item.category}</option>`
     })
 }
-window.linkStyle = async function (category) {
-    await getLinks();
-    let link = [...document.querySelectorAll(".navlinks a")]
+window.linkStyle = function (category) {
+    link = [...document.querySelectorAll(".navlinks a")]
+    console.log(link)
     link.forEach(item => {
         item.style.color = "black"
     })
@@ -59,10 +66,9 @@ window.menuShow = async function (event, category) {
             menuToggle();
         }
         document.querySelector("#slider").style.display = "none"
-        catData = await categoryData(category)
         menular.innerHTML = ""
         $(".my_loader").hide();
-        catData.forEach(menu => {
+        categoryDataObj[category].forEach(menu => {
             menular.innerHTML +=
                 `<div class="menu">
                     <img src="${menu.img}" onerror="this.src='img/noimages.jpeg'"/>
@@ -80,9 +86,8 @@ window.menuShow = async function (event, category) {
                 </div>`
         })
     }
+    linkStyle();
     $("html, body").animate({ scrollTop: 0 })
-    await linkStyle(category);
-    sessionStorage.setItem("SelectedCategory", category);
 }
 window.sil = function (category, id) {
     Swal.fire({
@@ -97,10 +102,9 @@ window.sil = function (category, id) {
     }).then(async (result) => {
         if (result.isConfirmed) {
             await deleteMenu(category, id);
-            await menuShow(null, category);
-            await linkStyle(category);
-            sessionStorage.setItem("SelectedCategory", category);
-
+            categoryDataObj[category] = categoryDataObj[category].filter(item => item.id !== id);
+            menuShow(null, category);
+            linkStyle(category);
             Swal.fire({
                 title: 'Ugurlu!',
                 text: 'Sizin menyu uğurla silindi!',
@@ -125,12 +129,12 @@ window.addMenu = async function (e) {
     let newMenu = getValues();
     let category = catSelect.value;
     await postMenu(category, newMenu);
-    await linkStyle(category);
-    await menuShow(null, category);
+    categoryDataObj[category].push(newMenu);
+    menuShow(null, category);
+    linkStyle(category);
     $('html, body').animate({ scrollTop: $(document).height() }, 'slow');
     $(".edit_btn").show();
     notyf.success('Sizin menu ugurla eleve edildi!');
-    sessionStorage.setItem("SelectedCategory", category);
 }
 window.edit = async function (category, id) {
     $(".form_head").text("Menuda deyisiklik et")
@@ -138,8 +142,7 @@ window.edit = async function (category, id) {
     $(".form_img").focus();
     $(".submit").hide();
     $("html, body").animate({ scrollTop: "0" });
-    catData = await categoryData(category);
-    let element = catData.find(item => item.id == id);
+    let element = categoryDataObj[category].find(item => item.id == id);
     formInputs[0].value = element.img;
     formInputs[1].value = element.title;
     formInputs[2].value = element.composition;
@@ -152,34 +155,20 @@ window.menuYenile = async function (e) {
     let editedMenu = getValues()
     let category = catSelect.value
     await editMenu(category, editedMenu, globeID)
-    await menuShow(null, category);
+    let elementIndex = categoryDataObj[category].findIndex(item => item.id == globeID);
+    categoryDataObj[category][elementIndex] = { ...editedMenu, id: globeID };
+    menuShow(null, category);
     notyf.success('Sizin menunuz ugurla yenilendi!');
     $(".submit").show();
     $(".form_box").slideUp()
     $("html, body").animate({ scrollTop: $(document).height() })
 }
-window.onload = async function () {
-    document.querySelector(".my_loader").style.display = "none";
-    navLinksShow();
-    selectCatVal();
-    let SelectedCategory = sessionStorage.getItem("SelectedCategory") || "kampaniyalar";
-    if (SelectedCategory === "kampaniyalar") {
-        document.querySelector("#slider").style.display = "initial"
-        menular.innerHTML = ""
-    }
-    else {
-        document.querySelector("#slider").style.display = "none"
-        await menuShow(null, SelectedCategory);
-        await linkStyle(SelectedCategory);
-    }
-};
 window.mainPage = async function () {
     let category = "kampaniyalar";
-    await menuShow(null, category);
+    menuShow(null, category);
 }
 
-// Her category ucun data yaradilmalidir
-// Her emeliyyatda data-ya da elave ve silinmeli ve ya deyisiklik olunmalidir
-// Her emeliyyatin icinde fetch emeliyyatini cagirmamaliyiq, sadece data-lardan istifade edilecek 
 // sessionStorage- legv olunacaq
-// onload legv olunacaq
+// sessionStorage.setItem("SelectedCategory", category); --- linklere klik olduqdan sonra reload olanda sehife slider-e kecir
+// linkStyle islemir
+
