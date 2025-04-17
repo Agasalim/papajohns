@@ -32,7 +32,6 @@ function navLinksShow() {
     allCategory.forEach(link => {
         navlinks.innerHTML += `<a href="" onclick="menuShow(event, '${link.category}')">${link.category}</a>`
     })
-    link = [...document.querySelectorAll(".navlinks a")]
 }
 function selectCatVal() {
     catSelect.innerHTML = ""
@@ -41,20 +40,23 @@ function selectCatVal() {
         catSelect.innerHTML += `<option value="${item.category}">${item.category}</option>`
     })
 }
-window.linkStyle = function (category) {
-    link = [...document.querySelectorAll(".navlinks a")]
-    console.log(link)
-    link.forEach(item => {
-        item.style.color = "black"
-    })
-    if ($("#topPanel").hasClass("height_fit")) {
-        let thisCategory = link.find(item => item.textContent.toLowerCase() === category.toLowerCase())
-        thisCategory.style.color = "red";
-    }
+window.linkStyle = function () {
+    let selectedLink = sessionStorage.getItem("SelectedCategory");
+    setTimeout(() => {
+        link = [...document.querySelectorAll(".navlinks a")]
+        console.log(link)
+        link.forEach(item => {
+            item.style.color = "black"
+        })
+        if ($("#topPanel").hasClass("height_fit")) {
+            let thisCategory = link.find(item => item.textContent.toLowerCase() === selectedLink.toLowerCase())
+            thisCategory.style.color = "red";
+        }
+    }, 100);
 }
-window.menuShow = async function (event, category) {
+window.menuShow = function (event, category) {
     if (event) event.preventDefault();
-    if (category === "kampaniyalar") {
+    if (category === "kampaniyalar" || !category) {
         document.querySelector("#slider").style.display = "initial"
         menular.innerHTML = ""
         document.querySelector(".my_loader").style.display = "none";
@@ -86,8 +88,9 @@ window.menuShow = async function (event, category) {
                 </div>`
         })
     }
-    linkStyle();
     $("html, body").animate({ scrollTop: 0 })
+    sessionStorage.setItem("SelectedCategory", category);
+    linkStyle();
 }
 window.sil = function (category, id) {
     Swal.fire({
@@ -168,7 +171,12 @@ window.mainPage = async function () {
     menuShow(null, category);
 }
 
-// sessionStorage- legv olunacaq
-// sessionStorage.setItem("SelectedCategory", category); --- linklere klik olduqdan sonra reload olanda sehife slider-e kecir
-// linkStyle islemir
+window.onload = async function(){
+    await allData();
+    let selected = sessionStorage.getItem("SelectedCategory");
+    if (selected) {
+        menuShow(null, selected);
+    }
+}
+
 
