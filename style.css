@@ -207,6 +207,7 @@ header {
     position: absolute;
     top: 80px;
     height: 80vh;
+    width: 100%;
 }
 .swiper {
     width: 100%;
