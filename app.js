@@ -15,8 +15,17 @@ var notyf = new Notyf({
         y: 'top',
     }
 });
-document.querySelector(".my_loader").style.display = "none";
 allData();
+document.querySelector("#slider").style.display = "none"
+window.onload = async function(){
+    document.querySelector("#slider").style.display = "none";
+    document.querySelector(".my_loader").style.display = "initial";
+    await allData();
+    let selected = sessionStorage.getItem("SelectedCategory");
+    if (selected) {
+        menuShow(null, selected);
+    }
+}
 async function allData() {
     allCategory = await getLinks();
     for (let cat of allCategory) {
@@ -26,6 +35,8 @@ async function allData() {
     }
     navLinksShow();
     selectCatVal();
+    document.querySelector("#slider").style.display = "initial"
+    document.querySelector(".my_loader").style.display = "none";
 }
 function navLinksShow() {
     navlinks.innerHTML = ""
@@ -52,7 +63,7 @@ window.linkStyle = function () {
             let thisCategory = link.find(item => item.textContent.toLowerCase() === selectedLink.toLowerCase())
             thisCategory.style.color = "red";
         }
-    }, 100);
+    }, 50);
 }
 window.menuShow = function (event, category) {
     if (event) event.preventDefault();
@@ -169,14 +180,6 @@ window.menuYenile = async function (e) {
 window.mainPage = async function () {
     let category = "kampaniyalar";
     menuShow(null, category);
-}
-
-window.onload = async function(){
-    await allData();
-    let selected = sessionStorage.getItem("SelectedCategory");
-    if (selected) {
-        menuShow(null, selected);
-    }
 }
 
 

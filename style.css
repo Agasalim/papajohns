@@ -94,10 +94,9 @@ nav{
     color: var(--bg_black);
     border-bottom: 2px solid transparent;
     text-transform: capitalize;
-    padding: 5px 0;
+    padding: 5px;
     transition: .3s;
 }
-.navlinks a:hover{border-color: var(--bg_red);}
 .navlinks a:focus{border-color: var(--bg_red);}
 .menu_links{display: none;}
 .order_btn{
@@ -350,10 +349,13 @@ form {
     .navlinks a{
         width: fit-content;
         padding: 3px 10px;
-        /* border-radius: 15px; */
+        border-radius: 15px;
         transition: .3s;
     }
-    .navlinks a:hover{background-color: var(--bg3);}
+    .navlinks a:hover{
+        box-shadow: 1px 3px red;
+    }
+    .navlinks a:focus{border-color: transparent;}
     main{padding-top: 100px;}
     .menu_links{
         width: 100%;
