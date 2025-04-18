@@ -203,6 +203,7 @@ header {
     padding-top: 30px;
 }
 #slider{
+    display: none;
     position: absolute;
     top: 80px;
     height: 80vh;

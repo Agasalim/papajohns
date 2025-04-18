@@ -16,16 +16,6 @@ var notyf = new Notyf({
     }
 });
 allData();
-document.querySelector("#slider").style.display = "none"
-window.onload = async function(){
-    document.querySelector("#slider").style.display = "none";
-    document.querySelector(".my_loader").style.display = "initial";
-    await allData();
-    let selected = sessionStorage.getItem("SelectedCategory");
-    if (selected) {
-        menuShow(null, selected);
-    }
-}
 async function allData() {
     allCategory = await getLinks();
     for (let cat of allCategory) {
@@ -35,8 +25,17 @@ async function allData() {
     }
     navLinksShow();
     selectCatVal();
-    document.querySelector("#slider").style.display = "initial"
-    document.querySelector(".my_loader").style.display = "none";
+    $("#slider").show();
+    $(".my_loader").hide();
+}
+window.onload = async function(){
+    $("#slider").hide();
+    $(".my_loader").show();
+    await allData();
+    let selected = sessionStorage.getItem("SelectedCategory");
+    if (selected) {
+        menuShow(null, selected);
+    }
 }
 function navLinksShow() {
     navlinks.innerHTML = ""
@@ -68,17 +67,20 @@ window.linkStyle = function () {
 window.menuShow = function (event, category) {
     if (event) event.preventDefault();
     if (category === "kampaniyalar" || !category) {
-        document.querySelector("#slider").style.display = "initial"
+        $(".my_loader").hide();
+        $("#slider").show();
         menular.innerHTML = ""
-        document.querySelector(".my_loader").style.display = "none";
-    }
-    else {
-        $(".my_loader").show();
-        $(".form_box").slideUp()
         if ($("#topPanel").hasClass("height_100")) {
             menuToggle();
         }
-        document.querySelector("#slider").style.display = "none"
+    }
+    else {
+        $(".my_loader").show();
+        $(".form_box").slideUp();
+        $("#slider").hide();
+        if ($("#topPanel").hasClass("height_100")) {
+            menuToggle();
+        }
         menular.innerHTML = ""
         $(".my_loader").hide();
         categoryDataObj[category].forEach(menu => {
